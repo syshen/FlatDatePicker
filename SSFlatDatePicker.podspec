@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "FlatDatePicker"
+  s.name         = "SSFlatDatePicker"
   s.version      = "0.0.3"
   s.summary      = "An iOS custom date picker in the flat design."
   s.homepage     = "https://github.com/syshen/FlatDatePicker"
