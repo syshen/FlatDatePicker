@@ -30,7 +30,7 @@
   
   [self.alarm addObserver:self
                forKeyPath:@"alarmDate"
-                  options:NSKeyValueObservingOptionNew
+                  options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew
                   context:nil];
   
   [UIBarButtonItem configureFlatButtonsWithColor:[UIColor cloudsColor] highlightedColor:[UIColor grayColor] cornerRadius:3];
@@ -38,7 +38,7 @@
 
   [self.navigationController.navigationBar configureFlatNavigationBarWithColor:[UIColor whiteColor]];
   
-  [[SSFlatDatePicker appearance] setFont:[UIFont fontWithName:@"Georgia-BoldItalic" size:22]];
+  [[SSFlatDatePicker appearance] setFont:[UIFont fontWithName:@"Georgia-BoldItalic" size:18]];
   [[SSFlatDatePicker appearance] setTextColor:[UIColor blackColor]];
   [[SSFlatDatePicker appearance] setBackgroundColor:[UIColor grayColor]];
   [[SSFlatDatePicker appearance] setGradientColor:[UIColor whiteColor]];
@@ -47,7 +47,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  
+  [self.tableView reloadData];
 }
 
 - (void) dealloc {
@@ -83,17 +83,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-- (IBAction) datePickerValueDidChange:(id)sender {
-  
-  NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-  formatter.dateStyle = NSDateFormatterNoStyle;
-  formatter.timeStyle = NSDateFormatterShortStyle;
-  
-  self.dateLabel.text = [formatter stringFromDate:self.datePicker.date];
-  
-}*/
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;
 }
@@ -113,6 +102,7 @@
   [headerView addSubview:label];
   headerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   
+  self.alarmLabel = label;
   return headerView;
 }
 
@@ -132,6 +122,7 @@
   cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
   if (indexPath.row == 0) {
     cell.textLabel.text = @"Enabled";
+    cell.detailTextLabel.text = nil;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SSFlatSwitch *enabledSwitch = [[SSFlatSwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 34)];
     enabledSwitch.onLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
@@ -146,10 +137,24 @@
     cell.textLabel.text = @"Alarm time";
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryView = nil;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = NSDateFormatterNoStyle;
+    formatter.timeStyle = NSDateFormatterShortStyle;
+    cell.detailTextLabel.text = [formatter stringFromDate:self.alarm.alarmDate];
   } else {
     cell.textLabel.text = @"Schedule";
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    cell.accessoryView = nil;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (self.alarm.repeated) {
+      cell.detailTextLabel.text = @"Repeated";
+    } else {
+      NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+      formatter.dateStyle = NSDateFormatterShortStyle;
+      formatter.timeStyle = NSDateFormatterNoStyle;
+      cell.detailTextLabel.text = [formatter stringFromDate:self.alarm.alarmDate];
+    }
   }
   
   return cell;

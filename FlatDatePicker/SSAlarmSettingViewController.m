@@ -52,8 +52,16 @@
 }
 
 - (IBAction)dateChanged:(id)sender {
-  
-  [self.alarm setAlarmDate:self.datePicker.date];
+
+  SSFlatDatePicker *datePicker = (SSFlatDatePicker*)sender;
+  NSDate *settingDate = self.alarm.alarmDate;
+
+  NSCalendar *calendar = [NSCalendar currentCalendar];
+  NSDateComponents *dc = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSTimeZoneCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:settingDate];
+  NSDateComponents *settingComponents = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit | NSTimeZoneCalendarUnit fromDate:datePicker.date];
+  dc.hour = settingComponents.hour;
+  dc.minute = settingComponents.minute;
+  self.alarm.alarmDate = [calendar dateFromComponents:dc];
   
 }
 @end

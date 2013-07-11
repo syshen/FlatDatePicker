@@ -119,7 +119,7 @@
   }
   
   attributes.gradient = graident;
-  
+
 }
 
 +(Class) layoutAttributesClass {
@@ -182,6 +182,17 @@
 @end
 
 @implementation SSFlatDatePickerCollectionView
+
+- (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
+  self = [super initWithFrame:frame collectionViewLayout:layout];
+  if (self) {
+    self.showsVerticalScrollIndicator = NO;
+    self.alwaysBounceVertical = NO;
+    self.bounces = NO;
+    [self registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
+  }
+  return self;
+}
 
 - (NSIndexPath*)currentSelectedIndexPath {
   
@@ -248,8 +259,6 @@
   if (_datePickerMode == SSFlatDatePickerModeDate) {
     if (!_scrollerYear) {
       self.scrollerYear = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout1 ];
-      [self.scrollerYear registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
-      self.scrollerYear.showsVerticalScrollIndicator = NO;
       self.scrollerYear.delegate = self;
       self.scrollerYear.dataSource = self;
       [self addSubview:self.scrollerYear];
@@ -258,8 +267,6 @@
     
     if (!_scrollerMonth) {
       self.scrollerMonth = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout2];
-      [self.scrollerMonth registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
-      self.scrollerMonth.showsVerticalScrollIndicator = NO;
       self.scrollerMonth.delegate = self;
       self.scrollerMonth.dataSource = self;
       [self addSubview:self.scrollerMonth];
@@ -268,8 +275,6 @@
     
     if (!_scrollerDay) {
       self.scrollerDay = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout3];
-      [self.scrollerDay registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
-      self.scrollerDay.showsVerticalScrollIndicator = NO;
       self.scrollerDay.delegate = self;
       self.scrollerDay.dataSource = self;
       [self addSubview:self.scrollerDay];
@@ -279,8 +284,6 @@
   } else if (_datePickerMode == SSFlatDatePickerModeTime) {
     if (!_scrollerHour) {
       self.scrollerHour = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout1];
-      [self.scrollerHour registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
-      self.scrollerHour.showsVerticalScrollIndicator = NO;
       self.scrollerHour.delegate = self;
       self.scrollerHour.dataSource = self;
       [self addSubview:self.scrollerHour];
@@ -289,8 +292,6 @@
     
     if (!_scrollerMinute) {
       self.scrollerMinute = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout2];
-      [self.scrollerMinute registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
-      self.scrollerMinute.showsVerticalScrollIndicator = NO;
       self.scrollerMinute.delegate = self;
       self.scrollerMinute.dataSource = self;
       [self addSubview:self.scrollerMinute];
@@ -299,8 +300,6 @@
     
     if (!_scrollerAPM) {
       self.scrollerAPM = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout3];
-      [self.scrollerAPM registerClass:[SSFlatDateViewCell class] forCellWithReuseIdentifier:@"datePickerCell"];
-      self.scrollerAPM.showsVerticalScrollIndicator = NO;
       self.scrollerAPM.delegate = self;
       self.scrollerAPM.dataSource = self;
       [self addSubview:self.scrollerAPM];
@@ -438,8 +437,20 @@
   
 }
 
+- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+
+  if (!decelerate)
+    [self endScrollForScrollView:scrollView];
+
+}
+
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   
+  [self endScrollForScrollView:scrollView];
+
+}
+
+- (void) endScrollForScrollView:(UIScrollView*)scrollView {
   if (scrollView == self.scrollerYear) {
     [self.scrollerDay reloadData];
   } else if (scrollView == self.scrollerMonth) {
@@ -501,7 +512,7 @@
   
   NSInteger currentMinIndex = [self.scrollerMinute currentSelectedIndexPath].row;
   if (dateComponents.minute != currentMinIndex) {
-    [self.scrollerMinute scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.minute-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
+    [self.scrollerMinute scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.minute inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
   }
   
   NSInteger currentAPMIndex = [self.scrollerAPM currentSelectedIndexPath].row;
@@ -531,14 +542,13 @@
   NSInteger currentMinIndex = [self.scrollerMinute currentSelectedIndexPath].row;
   NSInteger currentAPMIndex = [self.scrollerAPM currentSelectedIndexPath].row;
   dComps.hour = (currentAPMIndex==0) ? (currentHourIndex+1):(currentHourIndex+13);
-  dComps.minute = currentMinIndex + 1;
+  dComps.minute = currentMinIndex;
 
   dComps.timeZone = [NSTimeZone systemTimeZone];
   
   return [calendar dateFromComponents:dComps];
 
 }
-
 
 @end
 

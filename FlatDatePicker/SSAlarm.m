@@ -23,7 +23,9 @@ static NSString *kSSAlarmRepeatKey = @"kSSAlarmRepeatKey";
 
 - (void) setAlarmDate:(NSDate *)alarmDate {
  
+//  [self willChangeValueForKey:@"alarmDate"];
   _alarmDate = alarmDate;
+//  [self didChangeValueForKey:@"alarmDate"];
   [[NSUserDefaults standardUserDefaults] setValue:alarmDate forKey:kSSAlarmKey];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
@@ -31,7 +33,9 @@ static NSString *kSSAlarmRepeatKey = @"kSSAlarmRepeatKey";
 
 - (void) setRepeated:(BOOL)repeated {
   
+//  [self willChangeValueForKey:@"repeated"];
   _repeated = repeated;
+//  [self didChangeValueForKey:@"repeated"];
   [[NSUserDefaults standardUserDefaults] setBool:repeated forKey:kSSAlarmRepeatKey];
   [[NSUserDefaults standardUserDefaults] synchronize];
   

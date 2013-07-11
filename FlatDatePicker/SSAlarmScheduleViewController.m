@@ -13,7 +13,6 @@
 
 @interface SSAlarmScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) SSFlatDatePicker *datePicker;
 @end
 
 @implementation SSAlarmScheduleViewController
@@ -35,7 +34,6 @@
 
 - (void) viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  [self.datePicker setDate:[NSDate date] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,17 +42,40 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) repeatedChanged:(id)sender {
+  SSFlatSwitch *fswitch = (SSFlatSwitch*)sender;
+  self.alarm.repeated = fswitch.on;
+  [self.tableView reloadData];
+}
+
+- (void) dateChanged:(id)sender {
+  
+  SSFlatDatePicker *datePicker = (SSFlatDatePicker*)sender;
+  NSDate *settingDate = self.alarm.alarmDate;
+  NSCalendar *calendar = [NSCalendar currentCalendar];
+  NSDateComponents *dc = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSTimeZoneCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:settingDate];
+  NSDateComponents *settingComponents = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSTimeZoneCalendarUnit fromDate:datePicker.date];
+  dc.year = settingComponents.year;
+  dc.month = settingComponents.month;
+  dc.day = settingComponents.day;
+  self.alarm.alarmDate = [calendar dateFromComponents:dc];
+  
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 2;
+  if (self.alarm.repeated)
+    return 1;
+  else
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 1)
-    return 150;
+    return 151;
   return 44;
 }
 
@@ -75,7 +96,8 @@
     enabledSwitch.offColor = [UIColor silverColor];
     enabledSwitch.onBackgroundColor = [UIColor cloudsColor];
     enabledSwitch.offBackgroundColor = [UIColor cloudsColor];
-    enabledSwitch.on = YES;
+    enabledSwitch.on = self.alarm.repeated;
+    [enabledSwitch addTarget:self action:@selector(repeatedChanged:) forControlEvents:UIControlEventValueChanged];
     cell.accessoryView = enabledSwitch;
 
     return cell;
@@ -87,11 +109,20 @@
       cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:pickerCell];
     }
     
-    self.datePicker = [[SSFlatDatePicker alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, cell.contentView.frame.size.height)];
-    self.datePicker.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.datePicker.datePickerMode = SSFlatDatePickerModeDate;
+    for (UIView *subView in cell.contentView.subviews) {
+      if ([subView isKindOfClass:[SSFlatDatePicker class]])
+        [subView removeFromSuperview];
+    }
+    
+    SSFlatDatePicker *datePicker = [[SSFlatDatePicker alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 150)];
+    datePicker.autoresizingMask =  UIViewAutoresizingFlexibleWidth;
+    datePicker.datePickerMode = SSFlatDatePickerModeDate;
+    [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [datePicker setDate:self.alarm.alarmDate animated:YES];
+    });
 
-    [cell.contentView addSubview:self.datePicker];
+    [cell.contentView addSubview:datePicker];
     return cell;
     
   }
