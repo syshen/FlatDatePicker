@@ -8,10 +8,16 @@
 
 #import "SSViewController.h"
 #import "SSFlatDatePicker.h"
+#import "SSAlarmSettingViewController.h"
+#import "SSAlarmScheduleViewController.h"
+#import "SSAlarm.h"
+#import <FlatUIKit/FlatUIKit.h>
+#import "SSFlatSwitch.h"
 
-@interface SSViewController ()
-@property (nonatomic, weak) IBOutlet UILabel *dateLabel;
-@property (nonatomic, weak) IBOutlet SSFlatDatePicker *datePicker;
+@interface SSViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) SSAlarm *alarm;
+@property (nonatomic, strong) UILabel *alarmLabel;
 @end
 
 @implementation SSViewController
@@ -20,19 +26,55 @@
 {
   [super viewDidLoad];
   
-  /*
+  self.alarm = [[SSAlarm alloc] init];
+  
+  [self.alarm addObserver:self
+               forKeyPath:@"alarmDate"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
+  
+  [UIBarButtonItem configureFlatButtonsWithColor:[UIColor cloudsColor] highlightedColor:[UIColor grayColor] cornerRadius:3];
+  [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor: [UIColor blackColor], UITextAttributeTextShadowOffset: @(0)} forState:UIControlStateNormal];
+
+  [self.navigationController.navigationBar configureFlatNavigationBarWithColor:[UIColor whiteColor]];
+  
   [[SSFlatDatePicker appearance] setFont:[UIFont fontWithName:@"Georgia-BoldItalic" size:22]];
   [[SSFlatDatePicker appearance] setTextColor:[UIColor blackColor]];
-  [[SSFlatDatePicker appearance] setBackgroundColor:[UIColor blackColor]];
-  [[SSFlatDatePicker appearance] setGradientColor:[UIColor grayColor]];
-   */
+  [[SSFlatDatePicker appearance] setBackgroundColor:[UIColor grayColor]];
+  [[SSFlatDatePicker appearance] setGradientColor:[UIColor whiteColor]];
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self.datePicker setDate:[NSDate date] animated:YES];
-  [self datePickerValueDidChange:self.datePicker];
+}
+
+- (void) dealloc {
+  [self.alarm removeObserver:self forKeyPath:@"alarmDate"];
+}
+
+- (NSString*)formattedStringForDate:(NSDate*)date {
+  static NSDateFormatter *formatter = nil;
+  if (!formatter) {
+    formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = NSDateFormatterNoStyle;
+    formatter.timeStyle = NSDateFormatterMediumStyle;
+  }
+  
+  if (!date)
+    return @"--:-- --";
+  return [formatter stringFromDate:date];
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([keyPath isEqualToString:@"alarmDate"]) {
+    NSDate *newDate = change[NSKeyValueChangeNewKey];
+    if (self.alarmLabel) {
+      self.alarmLabel.text = [self formattedStringForDate:newDate];
+    }
+  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,14 +83,90 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
 - (IBAction) datePickerValueDidChange:(id)sender {
   
   NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-  formatter.dateStyle = NSDateFormatterMediumStyle;
-  formatter.timeStyle = NSDateFormatterNoStyle;
+  formatter.dateStyle = NSDateFormatterNoStyle;
+  formatter.timeStyle = NSDateFormatterShortStyle;
   
   self.dateLabel.text = [formatter stringFromDate:self.datePicker.date];
   
+}*/
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return 1;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return 3;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  UIView *headerView = [[UIView alloc] initWithFrame:CGRectZero];
+  UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+  label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:28];
+  label.textAlignment = NSTextAlignmentCenter;
+  label.textColor = [UIColor blackColor];
+  label.text = [self formattedStringForDate:self.alarm.alarmDate];
+  [headerView addSubview:label];
+  headerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+  
+  return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+  return 300;
+
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  static NSString *identifier = @"Cell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+  if (!cell) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+  if (indexPath.row == 0) {
+    cell.textLabel.text = @"Enabled";
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    SSFlatSwitch *enabledSwitch = [[SSFlatSwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 34)];
+    enabledSwitch.onLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+    enabledSwitch.offLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+    enabledSwitch.onColor = [UIColor midnightBlueColor];
+    enabledSwitch.offColor = [UIColor silverColor];
+    enabledSwitch.onBackgroundColor = [UIColor cloudsColor];
+    enabledSwitch.offBackgroundColor = [UIColor cloudsColor];
+    enabledSwitch.on = YES;
+    cell.accessoryView = enabledSwitch;
+  } else if(indexPath.row == 1) {
+    cell.textLabel.text = @"Alarm time";
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+  } else {
+    cell.textLabel.text = @"Schedule";
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+  }
+  
+  return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  if (indexPath.row == 1) {
+    SSAlarmSettingViewController *vc = [[SSAlarmSettingViewController alloc] initWithNibName:@"SSAlarmSettingViewController" bundle:nil];
+    vc.alarm = self.alarm;
+    [self.navigationController pushViewController:vc animated:YES];
+  } else if (indexPath.row == 2){
+    SSAlarmScheduleViewController *vc = [[SSAlarmScheduleViewController alloc] initWithNibName:@"SSAlarmScheduleViewController" bundle:nil];
+    vc.alarm = self.alarm;
+    [self.navigationController pushViewController:vc animated:YES];
+  }
+  [tableView deselectRowAtIndexPath:indexPath animated:NO];
+  
+}
 @end

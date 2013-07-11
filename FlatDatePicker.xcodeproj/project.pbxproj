@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8020B277178BB8FB00F92485 /* SSFlatDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8020B276178BB40500F92485 /* SSFlatDatePicker.m */; };
+		8052A5ED178D0DAE00566999 /* SSAlarmSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052A5EB178D0DAE00566999 /* SSAlarmSettingViewController.m */; };
+		8052A5EE178D0DAE00566999 /* SSAlarmSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8052A5EC178D0DAE00566999 /* SSAlarmSettingViewController.xib */; };
+		80A51BE2178DAC300070F984 /* SSFlatSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A51BE1178DAC300070F984 /* SSFlatSwitch.m */; };
+		80AEFC16178D2A1800D4D872 /* SSAlarmScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEFC14178D2A1800D4D872 /* SSAlarmScheduleViewController.m */; };
+		80AEFC17178D2A1800D4D872 /* SSAlarmScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80AEFC15178D2A1800D4D872 /* SSAlarmScheduleViewController.xib */; };
+		80C13017178CF0C300E5E515 /* SSAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C13016178CF0C300E5E515 /* SSAlarm.m */; };
 		80F44FA7175610EB00A7F889 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80F44FA6175610EB00A7F889 /* UIKit.framework */; };
 		80F44FA9175610EB00A7F889 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80F44FA8175610EB00A7F889 /* Foundation.framework */; };
 		80F44FAB175610EB00A7F889 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80F44FAA175610EB00A7F889 /* CoreGraphics.framework */; };
@@ -19,11 +26,23 @@
 		80F44FC0175610EB00A7F889 /* SSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F44FBF175610EB00A7F889 /* SSViewController.m */; };
 		80F44FC3175610EB00A7F889 /* SSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80F44FC1175610EB00A7F889 /* SSViewController.xib */; };
 		80FE6222178A8606008CB57B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FE6221178A8606008CB57B /* QuartzCore.framework */; };
+		C267ED37E3B346E2AC160BD8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 551832E096464EEFBBB170D7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		551832E096464EEFBBB170D7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8020B275178BB40500F92485 /* SSFlatDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSFlatDatePicker.h; sourceTree = "<group>"; };
 		8020B276178BB40500F92485 /* SSFlatDatePicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSFlatDatePicker.m; sourceTree = "<group>"; };
+		8052A5EA178D0DAE00566999 /* SSAlarmSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAlarmSettingViewController.h; sourceTree = "<group>"; };
+		8052A5EB178D0DAE00566999 /* SSAlarmSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAlarmSettingViewController.m; sourceTree = "<group>"; };
+		8052A5EC178D0DAE00566999 /* SSAlarmSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSAlarmSettingViewController.xib; sourceTree = "<group>"; };
+		80A51BE0178DAC300070F984 /* SSFlatSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSFlatSwitch.h; sourceTree = "<group>"; };
+		80A51BE1178DAC300070F984 /* SSFlatSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSFlatSwitch.m; sourceTree = "<group>"; };
+		80AEFC13178D2A1800D4D872 /* SSAlarmScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAlarmScheduleViewController.h; sourceTree = "<group>"; };
+		80AEFC14178D2A1800D4D872 /* SSAlarmScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAlarmScheduleViewController.m; sourceTree = "<group>"; };
+		80AEFC15178D2A1800D4D872 /* SSAlarmScheduleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSAlarmScheduleViewController.xib; sourceTree = "<group>"; };
+		80C13015178CF0C300E5E515 /* SSAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAlarm.h; sourceTree = "<group>"; };
+		80C13016178CF0C300E5E515 /* SSAlarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAlarm.m; sourceTree = "<group>"; };
 		80F44FA3175610EB00A7F889 /* FlatDatePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatDatePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80F44FA6175610EB00A7F889 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		80F44FA8175610EB00A7F889 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,6 +60,7 @@
 		80F44FBF175610EB00A7F889 /* SSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSViewController.m; sourceTree = "<group>"; };
 		80F44FC2175610EB00A7F889 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSViewController.xib; sourceTree = "<group>"; };
 		80FE6221178A8606008CB57B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F542AC93D6B3490E839FA829 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +72,7 @@
 				80F44FA7175610EB00A7F889 /* UIKit.framework in Frameworks */,
 				80F44FA9175610EB00A7F889 /* Foundation.framework in Frameworks */,
 				80F44FAB175610EB00A7F889 /* CoreGraphics.framework in Frameworks */,
+				C267ED37E3B346E2AC160BD8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +87,7 @@
 				80F44FAC175610EB00A7F889 /* FlatDatePicker-Sample */,
 				80F44FA5175610EB00A7F889 /* Frameworks */,
 				80F44FA4175610EB00A7F889 /* Products */,
+				F542AC93D6B3490E839FA829 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +106,7 @@
 				80F44FA6175610EB00A7F889 /* UIKit.framework */,
 				80F44FA8175610EB00A7F889 /* Foundation.framework */,
 				80F44FAA175610EB00A7F889 /* CoreGraphics.framework */,
+				551832E096464EEFBBB170D7 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -93,9 +116,19 @@
 			children = (
 				80F44FB5175610EB00A7F889 /* SSAppDelegate.h */,
 				80F44FB6175610EB00A7F889 /* SSAppDelegate.m */,
+				80C13015178CF0C300E5E515 /* SSAlarm.h */,
+				80C13016178CF0C300E5E515 /* SSAlarm.m */,
+				80A51BE0178DAC300070F984 /* SSFlatSwitch.h */,
+				80A51BE1178DAC300070F984 /* SSFlatSwitch.m */,
 				80F44FBE175610EB00A7F889 /* SSViewController.h */,
 				80F44FBF175610EB00A7F889 /* SSViewController.m */,
 				80F44FC1175610EB00A7F889 /* SSViewController.xib */,
+				8052A5EA178D0DAE00566999 /* SSAlarmSettingViewController.h */,
+				8052A5EB178D0DAE00566999 /* SSAlarmSettingViewController.m */,
+				8052A5EC178D0DAE00566999 /* SSAlarmSettingViewController.xib */,
+				80AEFC13178D2A1800D4D872 /* SSAlarmScheduleViewController.h */,
+				80AEFC14178D2A1800D4D872 /* SSAlarmScheduleViewController.m */,
+				80AEFC15178D2A1800D4D872 /* SSAlarmScheduleViewController.xib */,
 				80F44FAD175610EB00A7F889 /* Supporting Files */,
 			);
 			name = "FlatDatePicker-Sample";
@@ -123,9 +156,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80F44FC6175610EB00A7F889 /* Build configuration list for PBXNativeTarget "FlatDatePicker" */;
 			buildPhases = (
+				84334E5FF189493F8443B135 /* Check Pods Manifest.lock */,
 				80F44F9F175610EB00A7F889 /* Sources */,
 				80F44FA0175610EB00A7F889 /* Frameworks */,
 				80F44FA1175610EB00A7F889 /* Resources */,
+				A0C2395BEFB943498CE442CE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -173,19 +208,57 @@
 				80F44FBB175610EB00A7F889 /* Default@2x.png in Resources */,
 				80F44FBD175610EB00A7F889 /* Default-568h@2x.png in Resources */,
 				80F44FC3175610EB00A7F889 /* SSViewController.xib in Resources */,
+				8052A5EE178D0DAE00566999 /* SSAlarmSettingViewController.xib in Resources */,
+				80AEFC17178D2A1800D4D872 /* SSAlarmScheduleViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84334E5FF189493F8443B135 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		A0C2395BEFB943498CE442CE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		80F44F9F175610EB00A7F889 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8020B277178BB8FB00F92485 /* SSFlatDatePicker.m in Sources */,
 				80F44FB3175610EB00A7F889 /* main.m in Sources */,
 				80F44FB7175610EB00A7F889 /* SSAppDelegate.m in Sources */,
 				80F44FC0175610EB00A7F889 /* SSViewController.m in Sources */,
+				80C13017178CF0C300E5E515 /* SSAlarm.m in Sources */,
+				8052A5ED178D0DAE00566999 /* SSAlarmSettingViewController.m in Sources */,
+				80AEFC16178D2A1800D4D872 /* SSAlarmScheduleViewController.m in Sources */,
+				80A51BE2178DAC300070F984 /* SSFlatSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +342,7 @@
 		};
 		80F44FC7175610EB00A7F889 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F542AC93D6B3490E839FA829 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlatDatePicker/FlatDatePicker-Prefix.pch";
@@ -280,6 +354,7 @@
 		};
 		80F44FC8175610EB00A7F889 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F542AC93D6B3490E839FA829 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlatDatePicker/FlatDatePicker-Prefix.pch";
