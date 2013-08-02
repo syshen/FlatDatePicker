@@ -11,6 +11,8 @@
 
 @class SSFlatDatePickerCollectionView;
 
+#define kNumberOfCellPerRow 5.0f
+
 #pragma mark - SSDatePickerLayoutAttriutes
 @interface SSDatePickerLayoutAttributes : UICollectionViewLayoutAttributes
 @property (nonatomic, strong) CAGradientLayer *gradient;
@@ -38,7 +40,7 @@
   self.scrollDirection = UICollectionViewScrollDirectionVertical;
   self.minimumInteritemSpacing = 0;
   self.minimumLineSpacing = 0;
-  self.itemSize = CGSizeMake(self.collectionView.frame.size.width, ((CGFloat)(self.collectionView.frame.size.height)/5.0f));
+  self.itemSize = CGSizeMake(self.collectionView.frame.size.width, ((CGFloat)(self.collectionView.frame.size.height)/kNumberOfCellPerRow));
   
   CGFloat h = (CGFloat)self.collectionView.frame.size.height/2.0f - (CGFloat)self.itemSize.height/2.0f;
   self.sectionInset = UIEdgeInsetsMake(h, 0, h, 0);
@@ -249,7 +251,6 @@
   CGFloat _longWidth, _shortWidth;
   _longWidth = 0.35 * (self.frame.size.width - _separatorWidth * 2);
   _shortWidth = 0.3 * (self.frame.size.width - _separatorWidth * 2);
-  
   NSAssert(self.frame.size.height >= 80, @"Height of date picker should be at least 80 points");
 
   SSFlatDatePickerFlowLayout *flowLayout1 = [[SSFlatDatePickerFlowLayout alloc] init];
@@ -257,12 +258,14 @@
   SSFlatDatePickerFlowLayout *flowLayout3 = [[SSFlatDatePickerFlowLayout alloc] init];
 
   if (_datePickerMode == SSFlatDatePickerModeDate) {
+    
     if (!_scrollerYear) {
       self.scrollerYear = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout1 ];
       self.scrollerYear.delegate = self;
       self.scrollerYear.dataSource = self;
       [self addSubview:self.scrollerYear];
     }
+    flowLayout1.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerYear.frame = CGRectMake(0, 0, _longWidth, self.frame.size.height);
     
     if (!_scrollerMonth) {
@@ -271,14 +274,16 @@
       self.scrollerMonth.dataSource = self;
       [self addSubview:self.scrollerMonth];
     }
+    flowLayout2.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerMonth.frame = CGRectMake(_separatorWidth + _longWidth, 0, _longWidth, self.frame.size.height);
-    
+
     if (!_scrollerDay) {
       self.scrollerDay = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout3];
       self.scrollerDay.delegate = self;
       self.scrollerDay.dataSource = self;
       [self addSubview:self.scrollerDay];
     }
+    flowLayout3.itemSize = CGSizeMake(_shortWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerDay.frame = CGRectMake(_separatorWidth*2 + _longWidth*2, 0, _shortWidth, self.frame.size.height);
     
   } else if (_datePickerMode == SSFlatDatePickerModeTime) {
@@ -288,6 +293,7 @@
       self.scrollerHour.dataSource = self;
       [self addSubview:self.scrollerHour];
     }
+    flowLayout1.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerHour.frame = CGRectMake(0, 0, _longWidth, self.frame.size.height);
     
     if (!_scrollerMinute) {
@@ -296,6 +302,7 @@
       self.scrollerMinute.dataSource = self;
       [self addSubview:self.scrollerMinute];
     }
+    flowLayout2.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerMinute.frame = CGRectMake(_separatorWidth + _longWidth, 0, _longWidth, self.frame.size.height);
     
     if (!_scrollerAPM) {
@@ -304,6 +311,7 @@
       self.scrollerAPM.dataSource = self;
       [self addSubview:self.scrollerAPM];
     }
+    flowLayout3.itemSize = CGSizeMake(_shortWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerAPM.frame = CGRectMake(_separatorWidth*2 + _longWidth*2, 0, _shortWidth, self.frame.size.height);
   }
   
@@ -322,6 +330,21 @@
   self.clipsToBounds = YES;
   self.layer.cornerRadius = 5;
   
+}
+
+- (void) reloadData {
+  [self.scrollerYear reloadData];
+  [self.scrollerMonth reloadData];
+  [self.scrollerMinute reloadData];
+  [self.scrollerDay reloadData];
+  [self.scrollerAPM reloadData];
+  [self.scrollerHour reloadData];
+}
+
+- (void) setTextColor:(UIColor *)textColor {
+  _textColor = textColor;
+  
+  [self reloadData];
 }
 
 - (void)layoutSubviews {
@@ -364,6 +387,7 @@
   self.scrollerMinute.backgroundColor = self.gradientColor;
   self.scrollerHour.backgroundColor = self.gradientColor;
   self.scrollerAPM.backgroundColor = self.gradientColor;
+  
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
