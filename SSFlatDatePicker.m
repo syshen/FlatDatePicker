@@ -534,6 +534,20 @@
   NSInteger currentYearIndex = [self.scrollerYear currentSelectedIndexPath].row;
   NSInteger currentMonthIndex = [self.scrollerMonth currentSelectedIndexPath].row;
   NSInteger currentDayIndex = [self.scrollerDay currentSelectedIndexPath].row;
+    
+    if (currentMonthIndex == 1) {
+        NSInteger year = currentYearIndex + self.yearRange.location;
+        BOOL isLeapYear = ((year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0);
+        NSInteger days = isLeapYear ? 29 : 28;
+        if (currentDayIndex+1 > days) {
+            currentDayIndex = days - 1;
+        }
+    }else if(currentMonthIndex==1 || currentMonthIndex==3 || currentMonthIndex==5 || currentMonthIndex==8 || currentMonthIndex==10){
+        if (currentDayIndex+1 > 30) {
+            currentDayIndex = 29;
+        }
+    }
+    
   dComps.year = currentYearIndex + self.yearRange.location;
   dComps.month = currentMonthIndex + 1;
   dComps.day = currentDayIndex + 1;
