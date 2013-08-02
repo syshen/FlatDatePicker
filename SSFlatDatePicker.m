@@ -217,12 +217,12 @@
 @property (nonatomic, strong) SSFlatDatePickerCollectionView *scrollerMinute;
 @property (nonatomic, strong) SSFlatDatePickerCollectionView *scrollerAPM;
 
-
-@property (nonatomic, strong) NSDate *today;
 @property (nonatomic, assign) NSRange yearRange;
 @end
 
-@implementation SSFlatDatePicker
+@implementation SSFlatDatePicker {
+  NSDate * _initiateDate;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -245,9 +245,9 @@
 }
 
 - (void)initialize {
+  BOOL initiate = NO;
   CGFloat _separatorWidth = 2;
 
-  
   CGFloat _longWidth, _shortWidth;
   _longWidth = 0.35 * (self.frame.size.width - _separatorWidth * 2);
   _shortWidth = 0.3 * (self.frame.size.width - _separatorWidth * 2);
@@ -263,6 +263,7 @@
       self.scrollerYear = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout1 ];
       self.scrollerYear.delegate = self;
       self.scrollerYear.dataSource = self;
+      initiate = YES;
       [self addSubview:self.scrollerYear];
     }
     flowLayout1.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
@@ -272,6 +273,7 @@
       self.scrollerMonth = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout2];
       self.scrollerMonth.delegate = self;
       self.scrollerMonth.dataSource = self;
+      initiate = YES;
       [self addSubview:self.scrollerMonth];
     }
     flowLayout2.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
@@ -281,6 +283,7 @@
       self.scrollerDay = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout3];
       self.scrollerDay.delegate = self;
       self.scrollerDay.dataSource = self;
+      initiate = YES;
       [self addSubview:self.scrollerDay];
     }
     flowLayout3.itemSize = CGSizeMake(_shortWidth, self.frame.size.height/kNumberOfCellPerRow);
@@ -291,6 +294,7 @@
       self.scrollerHour = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout1];
       self.scrollerHour.delegate = self;
       self.scrollerHour.dataSource = self;
+      initiate = YES;
       [self addSubview:self.scrollerHour];
     }
     flowLayout1.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
@@ -300,6 +304,7 @@
       self.scrollerMinute = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout2];
       self.scrollerMinute.delegate = self;
       self.scrollerMinute.dataSource = self;
+      initiate = YES;
       [self addSubview:self.scrollerMinute];
     }
     flowLayout2.itemSize = CGSizeMake(_longWidth, self.frame.size.height/kNumberOfCellPerRow);
@@ -309,16 +314,19 @@
       self.scrollerAPM = [[SSFlatDatePickerCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout3];
       self.scrollerAPM.delegate = self;
       self.scrollerAPM.dataSource = self;
+      initiate = YES;
       [self addSubview:self.scrollerAPM];
     }
     flowLayout3.itemSize = CGSizeMake(_shortWidth, self.frame.size.height/kNumberOfCellPerRow);
     self.scrollerAPM.frame = CGRectMake(_separatorWidth*2 + _longWidth*2, 0, _shortWidth, self.frame.size.height);
   }
   
-  self.today = [NSDate date];
+  NSDate *date = [NSDate date];
+  if (_initiateDate)
+    date = _initiateDate;
   NSCalendar *calendar = [NSCalendar currentCalendar];
   NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSTimeZoneCalendarUnit)
-                                                 fromDate:self.today];
+                                                 fromDate:date];
   
   NSRange range;
   range.location = dateComponents.year - 100;
@@ -330,6 +338,9 @@
   self.clipsToBounds = YES;
   self.layer.cornerRadius = 5;
   
+  if (initiate && _initiateDate) {
+    [self setDate:_initiateDate];
+  }
 }
 
 - (void) reloadData {
@@ -503,6 +514,9 @@
 }
 
 - (void) setDate:(NSDate *)date animated:(BOOL)animated {
+
+  if (!_initiateDate)
+    _initiateDate = date;
 
   NSCalendar *calendar = [NSCalendar currentCalendar];
   NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit| NSHourCalendarUnit | NSMinuteCalendarUnit |NSTimeZoneCalendarUnit)
