@@ -429,7 +429,7 @@
     
   } else if (collectionView == self.scrollerMinute) {
     
-    return 59;
+    return 60;
     
   } else if (collectionView == self.scrollerAPM) {
     
