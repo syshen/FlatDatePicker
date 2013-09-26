@@ -27,6 +27,15 @@
   return attributes;
   
 }
+
+- (BOOL) isEqual:(id)object {
+  BOOL equal = [super isEqual:object];
+  if (!equal)
+    return NO;
+  
+  return [self.gradient isEqual:[(SSDatePickerLayoutAttributes*)object gradient]];
+}
+
 @end
 
 #pragma mark - SSFlatDatePickerFlowLayout

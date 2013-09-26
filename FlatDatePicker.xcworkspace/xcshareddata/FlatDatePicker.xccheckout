@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E598FD5E-FE58-4027-8B3D-33AB6B75109B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FlatDatePicker</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>92CC4CFB-545E-4657-BCB4-34D4C0139CF9</key>
+		<string>ssh://github.com/syshen/FlatDatePicker.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FlatDatePicker.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>92CC4CFB-545E-4657-BCB4-34D4C0139CF9</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/syshen/FlatDatePicker.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>92CC4CFB-545E-4657-BCB4-34D4C0139CF9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>92CC4CFB-545E-4657-BCB4-34D4C0139CF9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FlatDatePicker</string>
+		</dict>
+	</array>
+</dict>
+</plist>
