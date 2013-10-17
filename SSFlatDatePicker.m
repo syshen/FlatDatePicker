@@ -602,7 +602,17 @@
   NSInteger currentHourIndex = [self.scrollerHour currentSelectedIndexPath].row;
   NSInteger currentMinIndex = [self.scrollerMinute currentSelectedIndexPath].row;
   NSInteger currentAPMIndex = [self.scrollerAPM currentSelectedIndexPath].row;
-  dComps.hour = (currentAPMIndex==0) ? (currentHourIndex+1):(currentHourIndex+13);
+    
+    //12-hour clock:12:15 AM --> 24-hour clock:00:15
+    //http://en.wikipedia.org/wiki/24-hour_clock
+    
+    BOOL isAM = currentAPMIndex == 0;
+    if (currentHourIndex == 11) {
+        dComps.hour = isAM ? 0 : 12;
+    }else{
+        dComps.hour = isAM ? (currentHourIndex + 1) : (currentHourIndex + 13);
+    }
+    
   dComps.minute = currentMinIndex;
 
   dComps.timeZone = [NSTimeZone systemTimeZone];
