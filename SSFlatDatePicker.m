@@ -417,35 +417,41 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+  
+  NSInteger numberOfItems = 0;
+  
   if (collectionView == self.scrollerYear) {
     
-    return self.yearRange.length;
+    numberOfItems = self.yearRange.length;
     
   } else if (collectionView == self.scrollerMonth) {
     
-    return 12;
+    numberOfItems = 12;
     
   } else if (collectionView == self.scrollerDay) {
+    
     if (self.date) {
       NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.date];
-      return dayRange.length;
+      numberOfItems = dayRange.length;
+    } else {
+      numberOfItems = 31;
     }
     
-    return 31;
   } else if (collectionView == self.scrollerHour) {
     
-    return 12;
+    numberOfItems = 12;
     
   } else if (collectionView == self.scrollerMinute) {
     
-    return 60;
+    numberOfItems = 60;
     
   } else if (collectionView == self.scrollerAPM) {
     
-    return 2;
+    numberOfItems = 2;
     
   }
 
+  return numberOfItems;
 }
 
 
