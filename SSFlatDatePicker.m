@@ -231,6 +231,7 @@
 
 @implementation SSFlatDatePicker {
   NSDate * _initiateDate;
+  NSDate * _dateSet;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -347,8 +348,8 @@
   self.clipsToBounds = YES;
   self.layer.cornerRadius = 5;
   
-  if (initiate && _initiateDate) {
-    [self setDate:_initiateDate];
+  if (initiate && !_initiateDate) {
+    [self setDate:date];
   }
 }
 
@@ -430,7 +431,10 @@
     
   } else if (collectionView == self.scrollerDay) {
     
-    if (self.date) {
+    if (_dateSet) {
+      NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:_dateSet];
+      numberOfItems = dayRange.length;
+    } else if (self.date) {
       NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.date];
       numberOfItems = dayRange.length;
     } else {
@@ -533,6 +537,8 @@
   if (!_initiateDate)
     _initiateDate = date;
 
+  _dateSet = date;
+  
   NSCalendar *calendar = [NSCalendar currentCalendar];
   NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit| NSHourCalendarUnit | NSMinuteCalendarUnit |NSTimeZoneCalendarUnit)
                                                  fromDate:date];
@@ -540,11 +546,13 @@
   NSInteger currentYearIndex = [self.scrollerYear currentSelectedIndexPath].row;
   if (yIndex != currentYearIndex) {
     [self.scrollerYear scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:yIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
+    [self.scrollerDay reloadData];
   }
   
   NSInteger currentMonthIndex = [self.scrollerMonth currentSelectedIndexPath].row;
   if (dateComponents.month != currentMonthIndex) {
     [self.scrollerMonth scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.month-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
+    [self.scrollerDay reloadData];
   }
 
   NSInteger currentDayIndex = [self.scrollerDay currentSelectedIndexPath].row;
@@ -576,6 +584,7 @@
     [self.scrollerAPM scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:APM inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
   }
 
+  _dateSet = nil;
 
 }
 
@@ -588,19 +597,19 @@
   NSInteger currentMonthIndex = [self.scrollerMonth currentSelectedIndexPath].row;
   NSInteger currentDayIndex = [self.scrollerDay currentSelectedIndexPath].row;
     
-    if (currentMonthIndex == 1) {
-        NSInteger year = currentYearIndex + self.yearRange.location;
-        BOOL isLeapYear = ((year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0);
-        NSInteger days = isLeapYear ? 29 : 28;
-        if (currentDayIndex+1 > days) {
-            currentDayIndex = days - 1;
-        }
-    }else if(currentMonthIndex==1 || currentMonthIndex==3 || currentMonthIndex==5 || currentMonthIndex==8 || currentMonthIndex==10){
-        if (currentDayIndex+1 > 30) {
-            currentDayIndex = 29;
-        }
+  if (currentMonthIndex == 1) {
+    NSInteger year = currentYearIndex + self.yearRange.location;
+    BOOL isLeapYear = ((year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0);
+    NSInteger days = isLeapYear ? 29 : 28;
+    if (currentDayIndex+1 > days) {
+      currentDayIndex = days - 1;
     }
-    
+  } else if(currentMonthIndex==1 || currentMonthIndex==3 || currentMonthIndex==5 || currentMonthIndex==8 || currentMonthIndex==10) {
+    if (currentDayIndex+1 > 30) {
+      currentDayIndex = 29;
+    }
+  }
+  
   dComps.year = currentYearIndex + self.yearRange.location;
   dComps.month = currentMonthIndex + 1;
   dComps.day = currentDayIndex + 1;
@@ -609,16 +618,16 @@
   NSInteger currentMinIndex = [self.scrollerMinute currentSelectedIndexPath].row;
   NSInteger currentAPMIndex = [self.scrollerAPM currentSelectedIndexPath].row;
     
-    //12-hour clock:12:15 AM --> 24-hour clock:00:15
-    //http://en.wikipedia.org/wiki/24-hour_clock
-    
-    BOOL isAM = currentAPMIndex == 0;
-    if (currentHourIndex == 11) {
-        dComps.hour = isAM ? 0 : 12;
-    }else{
-        dComps.hour = isAM ? (currentHourIndex + 1) : (currentHourIndex + 13);
-    }
-    
+  //12-hour clock:12:15 AM --> 24-hour clock:00:15
+  //http://en.wikipedia.org/wiki/24-hour_clock
+  
+  BOOL isAM = currentAPMIndex == 0;
+  if (currentHourIndex == 11) {
+    dComps.hour = isAM ? 0 : 12;
+  } else {
+    dComps.hour = isAM ? (currentHourIndex + 1) : (currentHourIndex + 13);
+  }
+  
   dComps.minute = currentMinIndex;
 
   dComps.timeZone = [NSTimeZone systemTimeZone];
