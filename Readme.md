@@ -5,7 +5,7 @@ Before iOS7 beta was announced, I developed this flat date picker for Xing app, 
 <img src="http://f.cl.ly/items/3B2Y3N2v2Z0l1D3U2O2l/date.png" width="400"/>
 <img src="http://f.cl.ly/items/0b1s0K3n3f210P110d2L/time.png" width="400"/>
 
-And also watch the sample app video here: http://youtu.be/liYePWmTe_E
+And also watch the sample app video here: http://youtu.be/ROgQzdq8CXg
 
 # What's in FlatDatePicker
 
@@ -25,5 +25,5 @@ And also watch the sample app video here: http://youtu.be/liYePWmTe_E
 5. You can hook the changed value throught monitoring the UIControlEventValueChanged event. 
 
 ## Cocoapods
-SSFlatDatePicker is in cocoapods now, you can find it and install it throguht pods command. 
+SSFlatDatePicker is in cocoapods now, you can find it and install it throught pods command. 
 
