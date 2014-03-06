@@ -453,9 +453,13 @@
     
     numberOfItems = 2;
     
-  }
+  } else {
 
-  return numberOfItems;
+    return numberOfItems;
+    
+  }
+  
+  return 0;
 }
 
 

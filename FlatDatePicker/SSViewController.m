@@ -37,12 +37,12 @@
   [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor: [UIColor blackColor], UITextAttributeTextShadowOffset: @(0)} forState:UIControlStateNormal];
 
   [self.navigationController.navigationBar configureFlatNavigationBarWithColor:[UIColor whiteColor]];
-  
+  /*
   [[SSFlatDatePicker appearance] setFont:[UIFont fontWithName:@"Georgia-BoldItalic" size:18]];
   [[SSFlatDatePicker appearance] setTextColor:[UIColor blackColor]];
   [[SSFlatDatePicker appearance] setBackgroundColor:[UIColor grayColor]];
   [[SSFlatDatePicker appearance] setGradientColor:[UIColor whiteColor]];
-
+*/
 }
 
 - (void) viewDidAppear:(BOOL)animated {
