@@ -453,13 +453,10 @@
     
     numberOfItems = 2;
     
-  } else {
-
-    return numberOfItems;
-    
   }
-  
-  return 0;
+
+  return numberOfItems;
+    
 }
 
 
@@ -470,18 +467,18 @@
   cell.textLabel.textColor = self.textColor;
 
   if (collectionView == self.scrollerYear) {
-    cell.textLabel.text = [NSString stringWithFormat:@"%d", (self.yearRange.location + indexPath.row)];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (self.yearRange.location + indexPath.row)];
   } else if (collectionView == self.scrollerMonth) {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [NSLocale currentLocale];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@", [formatter.shortMonthSymbols objectAtIndex:indexPath.row]];
   } else if (collectionView == self.scrollerDay) {
-    cell.textLabel.text = [NSString stringWithFormat:@"%d", (indexPath.row +1)];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row +1)];
   } else if (collectionView == self.scrollerHour) {
-    cell.textLabel.text = [NSString stringWithFormat:@"%02d", indexPath.row + 1];
+    cell.textLabel.text = [NSString stringWithFormat:@"%02ld", indexPath.row + 1];
   } else if (collectionView == self.scrollerMinute) {
-    cell.textLabel.text = [NSString stringWithFormat:@"%02d", indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%02ld", indexPath.row];
   } else {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [NSLocale currentLocale];
