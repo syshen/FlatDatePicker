@@ -60,7 +60,8 @@
 		80F44FBF175610EB00A7F889 /* SSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSViewController.m; sourceTree = "<group>"; };
 		80F44FC2175610EB00A7F889 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSViewController.xib; sourceTree = "<group>"; };
 		80FE6221178A8606008CB57B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		F542AC93D6B3490E839FA829 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		CFD0604A0254B92FEAB01D9D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		FB21E99543ADE0893AB40B82 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2901AAF63EA78547ADCA1D88 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CFD0604A0254B92FEAB01D9D /* Pods.debug.xcconfig */,
+				FB21E99543ADE0893AB40B82 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		80F44F9A175610EB00A7F889 = {
 			isa = PBXGroup;
 			children = (
@@ -87,7 +97,7 @@
 				80F44FAC175610EB00A7F889 /* FlatDatePicker-Sample */,
 				80F44FA5175610EB00A7F889 /* Frameworks */,
 				80F44FA4175610EB00A7F889 /* Products */,
-				F542AC93D6B3490E839FA829 /* Pods.xcconfig */,
+				2901AAF63EA78547ADCA1D88 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,7 +252,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -342,7 +352,7 @@
 		};
 		80F44FC7175610EB00A7F889 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F542AC93D6B3490E839FA829 /* Pods.xcconfig */;
+			baseConfigurationReference = CFD0604A0254B92FEAB01D9D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlatDatePicker/FlatDatePicker-Prefix.pch";
@@ -354,7 +364,7 @@
 		};
 		80F44FC8175610EB00A7F889 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F542AC93D6B3490E839FA829 /* Pods.xcconfig */;
+			baseConfigurationReference = FB21E99543ADE0893AB40B82 /* Pods.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlatDatePicker/FlatDatePicker-Prefix.pch";

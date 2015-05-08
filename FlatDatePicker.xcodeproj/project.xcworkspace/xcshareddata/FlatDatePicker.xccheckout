@@ -5,23 +5,23 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>E598FD5E-FE58-4027-8B3D-33AB6B75109B</string>
+	<string>A7C62069-73D9-431B-BE59-543476DE8C91</string>
 	<key>IDESourceControlProjectName</key>
 	<string>FlatDatePicker</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>B1C9B7619E20B16585D054AC570DD83CCD80917F</key>
-		<string>ssh://github.com/syshen/FlatDatePicker.git</string>
+		<string>https://github.com/Sidetalker/FlatDatePicker.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>FlatDatePicker.xcworkspace</string>
+	<string>FlatDatePicker.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>B1C9B7619E20B16585D054AC570DD83CCD80917F</key>
-		<string>..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/syshen/FlatDatePicker.git</string>
+	<string>https://github.com/Sidetalker/FlatDatePicker.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
