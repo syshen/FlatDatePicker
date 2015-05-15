@@ -551,13 +551,13 @@
   }
   
   NSInteger currentMonthIndex = [self.scrollerMonth currentSelectedIndexPath].row;
-  if (dateComponents.month != currentMonthIndex) {
+  if (dateComponents.month-1 != currentMonthIndex) {
     [self.scrollerMonth scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.month-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     [self.scrollerDay reloadData];
   }
 
   NSInteger currentDayIndex = [self.scrollerDay currentSelectedIndexPath].row;
-  if (dateComponents.day != currentDayIndex) {
+  if (dateComponents.day-1 != currentDayIndex) {
     [self.scrollerDay scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.day-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
   }
   
