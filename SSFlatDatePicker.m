@@ -535,6 +535,8 @@
 
 - (void) setDate:(NSDate *)date animated:(BOOL)animated {
 
+    NSAssert(date!=nil, @"Date cannot be nil");
+    
   if (!_initiateDate)
     _initiateDate = date;
 

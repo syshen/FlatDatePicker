@@ -9,10 +9,12 @@
 #import "SSAlarmScheduleViewController.h"
 #import "SSFlatDatePicker.h"
 #import "SSFlatSwitch.h"
+#import "NSDate+Utilities.h"
 #import <FlatUIKit/FlatUIKit.h>
 
 @interface SSAlarmScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) SSFlatDatePicker *datePicker;
 @end
 
 @implementation SSAlarmScheduleViewController
@@ -28,12 +30,22 @@
 
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.datePicker = [[SSFlatDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
+    self.datePicker.autoresizingMask =  UIViewAutoresizingFlexibleWidth;
+    self.datePicker.datePickerMode = SSFlatDatePickerModeDate;
+    [self.datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+    if (!self.alarm.alarmDate)
+        self.alarm.alarmDate = [[NSDate date] dateBySubtractingYears:10];
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+    
+    [super viewDidAppear:animated];
+    [self.datePicker setDate:self.alarm.alarmDate animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,6 +72,7 @@
   dc.day = settingComponents.day;
   self.alarm.alarmDate = [calendar dateFromComponents:dc];
   
+    NSLog(@"date: %@", self.alarm.alarmDate);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -113,16 +126,12 @@
       if ([subView isKindOfClass:[SSFlatDatePicker class]])
         [subView removeFromSuperview];
     }
-    
-    SSFlatDatePicker *datePicker = [[SSFlatDatePicker alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 150)];
-    datePicker.autoresizingMask =  UIViewAutoresizingFlexibleWidth;
-    datePicker.datePickerMode = SSFlatDatePickerModeDate;
-    [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [datePicker setDate:self.alarm.alarmDate animated:YES];
-    });
 
-    [cell.contentView addSubview:datePicker];
+      if (self.datePicker.superview != nil) {
+          [self.datePicker removeFromSuperview];
+      }
+      
+    [cell.contentView addSubview:self.datePicker];
     return cell;
     
   }
