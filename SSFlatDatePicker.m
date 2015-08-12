@@ -335,7 +335,7 @@
   if (_initiateDate)
     date = _initiateDate;
   NSCalendar *calendar = [NSCalendar currentCalendar];
-  NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSTimeZoneCalendarUnit)
+  NSDateComponents *dateComponents = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitTimeZone)
                                                  fromDate:date];
   
   NSRange range;
@@ -432,10 +432,10 @@
   } else if (collectionView == self.scrollerDay) {
     
     if (_dateSet) {
-      NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:_dateSet];
+      NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:_dateSet];
       numberOfItems = dayRange.length;
     } else if (self.date) {
-      NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.date];
+      NSRange dayRange = [[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:self.date];
       numberOfItems = dayRange.length;
     } else {
       numberOfItems = 31;
@@ -541,7 +541,7 @@
   _dateSet = date;
   
   NSCalendar *calendar = [NSCalendar currentCalendar];
-  NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit| NSHourCalendarUnit | NSMinuteCalendarUnit |NSTimeZoneCalendarUnit)
+    NSDateComponents *dateComponents = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitMinute|NSCalendarUnitTimeZone)
                                                  fromDate:date];
   NSInteger yIndex = dateComponents.year - self.yearRange.location;
   NSInteger currentYearIndex = [self.scrollerYear currentSelectedIndexPath].row;
@@ -551,13 +551,13 @@
   }
   
   NSInteger currentMonthIndex = [self.scrollerMonth currentSelectedIndexPath].row;
-  if (dateComponents.month != currentMonthIndex) {
+  if (dateComponents.month-1 != currentMonthIndex) {
     [self.scrollerMonth scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.month-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     [self.scrollerDay reloadData];
   }
 
   NSInteger currentDayIndex = [self.scrollerDay currentSelectedIndexPath].row;
-  if (dateComponents.day != currentDayIndex) {
+  if (dateComponents.day-1 != currentDayIndex) {
     [self.scrollerDay scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:dateComponents.day-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
   }
   
