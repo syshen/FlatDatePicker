@@ -24,6 +24,6 @@ And also watch the sample app video here: http://youtu.be/ROgQzdq8CXg
 4. Or, you can drag a UIView retangle in Interface Builder, set its custom class as SSFlatDatePicker, and link to the IBOutlet in your source code. 
 5. You can hook the changed value throught monitoring the UIControlEventValueChanged event. 
 
-## Cocoapods
+## CocoaPods
 SSFlatDatePicker is in cocoapods now, you can find it and install it throught pods command. 
 
